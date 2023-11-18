@@ -1,0 +1,2 @@
+1 1 * * * root cd /var/www/html && php artisan app:cleanup-lists
+1 14 * * * root cd /var/www/html && php artisan app:cleanup-lists

@@ -1,0 +1,25 @@
+
+<div class="card w-100 mt-2" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">
+        <div *ngIf="(votes | async)?.length == 0" (click)="deleteList()" class="btn btn-danger delete-list-btn">X</div>
+
+        <span>{{ list?.title }} </span>
+      </h5>
+      <div class="card-text">
+
+        <div class="votes">
+            <div class="vote" *ngFor="let vote of votes | async">
+                <div>{{ vote.name }}</div>
+                <div (click)="setVote(vote.id)" *ngIf="list?.type == 'vote'" class="btn btn-success">+</div>
+                <div class="btn btn-link staticbtn"  *ngIf="list?.type == 'vote'">{{ vote.votes }} </div>
+                <div (click)="setVote(vote.id, 'down')" *ngIf="list?.type == 'vote'" class="btn btn-success">-</div>
+                <div (click)="deleteVote(vote.id)" class="btn btn-danger">X</div>
+            </div>
+        </div>
+
+        <input type="text" [(ngModel)]="newName" (keyup)="createVote($event)" class="form-control mt-2" placeholder="New Vote"/>
+
+      </div>
+    </div>
+</div>

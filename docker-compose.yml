@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb:11
+    restart: always
+    volumes:
+      - food-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=SOMESECURESTRING
+      - MYSQL_PASSWORD=SOMESECURESTRING
+      - MYSQL_DATABASE=food
+      - MYSQL_USER=food
+      
+  frontend:
+    image: suterdev/food-frontend:1.0.0
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.entrypoints=web"
+      
+  backend:
+    image: suterdev/food-backend:1.0.0
+    restart: always
+    links:
+    - db:db
+    environment:
+      - APP_NAME=Food
+      - APP_KEY=base64:SOMESECURESTRING
+      - APP_DEBUG=false
+      - APP_URL=https://someurl
+      - DB_CONNECTION=mysql
+      - DB_HOST=DB
+      - DB_PORT=3306
+      - DB_DATABASE=food
+      - DB_USERNAME=food
+      - DB_PASSWORD=SOMESECURESTRING
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.entrypoints=web"
+  
+  proxy:
+    image: "traefik:v2.10"
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      
+            
+volumes:
+  food-db:
+    name: food-db
+     

@@ -1,0 +1,29 @@
+<h1 class="display-1">Food</h1>
+
+<h5 class="my-5 text-center">You can create your own space:</h5>
+
+
+    <div class="mb-3">
+      <label for="url" class="form-label">URL/Key</label>
+      <input type="text" [(ngModel)]="newURL" class="form-control" id="url">
+    </div>
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" [(ngModel)]="newTitle" class="form-control" id="title">
+    </div>
+    <div class="mb-3">
+      <label for="Description" class="form-label">Description</label>
+      <input type="text" [(ngModel)]="newDescription" class="form-control" id="Description">
+    </div>
+    
+    <button type="submit" (click)="createSpace()" class="btn btn-primary">Submit</button>
+
+
+<h5 class="my-5 text-center">Or go to an existing one:</h5>
+
+    <div class="mb-3">
+      <label for="url" class="form-label">URL/Key</label>
+      <input type="text" [(ngModel)]="goURL" class="form-control" id="url">
+    </div>
+    
+    <button type="submit" (click)="goSpace()" class="btn btn-primary">Go</button>
