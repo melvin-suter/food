@@ -14,7 +14,7 @@ RUN chmod +x /usr/local/bin/composer
 
 # App
 COPY backend /var/www/html
-RUN cd /var/www/html && composer update
+RUN cd /var/www/html && /usr/local/bin/composer update
 RUN chown -R www-data /var/www/html && chmod 755 /var/www/html/storage
 
 
