@@ -3,6 +3,5 @@
 cd /var/www/html
 php artisan migrate
 
-service cron start
-
+crond &
 docker-php-entrypoint $@
